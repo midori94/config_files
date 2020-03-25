@@ -1,0 +1,34 @@
+"set encoding to utf-8
+set encoding=utf-8
+
+"set on syntax highlighting
+filetype plugin on
+syntax on
+
+"set indentation
+filetype indent on
+
+"show line numbers
+set number
+
+"set spliting behavior
+set splitbelow
+set splitright
+
+"enable code folding
+set foldmethod=indent
+set foldlevel=99
+
+"enable folding with the spacebar
+nnoremap <space> za
+
+"split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"set clipboard to unnamed
+set clipboard=unnamedplus
+
+map <C-n> :NERDTreeToggle<CR>

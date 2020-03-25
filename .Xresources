@@ -1,0 +1,10 @@
+
+URxvt.font: xft:xos4 Terminus:size=9
+
+URxvt.scrollBar: false
+
+URxvt.depth: 32
+URxvt.background: rgba:0000/0000/0000/d000
+
+URxvt.foreground: rgb:ffff/ffff/ffff
+
