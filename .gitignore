@@ -3,6 +3,8 @@
 !.gitignore
 !.Xresources
 !.xinitrc
+!.zprofile
+!.zshrc
 !.vim/
 !.config/
 
