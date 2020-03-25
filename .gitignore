@@ -15,5 +15,7 @@
 !.config/sxhkd/*
 !.config/panel/
 !.config/panel/*
+!.config/rofi/
+!.config/rofi/*
 
 
