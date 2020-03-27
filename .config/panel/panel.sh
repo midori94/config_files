@@ -9,28 +9,12 @@ BAR_PARAMS=(
 	"-B \"#d0000000\" "
 	"-F \"#ffffff\" "
 )
-BAR() {
-	AUX=(
-		"%{l} "
-		"\uf1ef "
-		#"$WORKSPACE "
-		"%{c}"     
-		"$MESSAGE " 
-		"%{r} "     
-		"%{A:mic.sh:}$ICON4%{A} "
-		"| $ICON3 $BACKLIGHT% "
-		"| $ICON2 $VOLUME% "
-		"| $ICON1 $BATTERY% "
-		"| $DATE "
-		"| $TIME "
-	)
-	echo -e ${AUX[*]}
-}
 
 battery() {
 	while true; do
 		level="$(cat /sys/class/power_supply/BAT1/capacity)"
 		state="$(cat /sys/class/power_supply/BAT1/status)"
+		[ $level -lt 3 -a $state = "Discharging" ] && systemctl hibernate
 		echo "B:$level:$state"
 		sleep 60
 	done
@@ -47,7 +31,6 @@ workspace() {
 	bspc subscribe report	
 }
 
-ICON3="\uf4b7"
 
 make_panel() {
 	while read -r line; do
@@ -61,12 +44,15 @@ make_panel() {
 			B)
 				BATTERY="$2"	
 				BAT_STATE="$3"
-				ICON1="%{F#ff0000}\uf295%{F-}"
-				[ $BATTERY -ge 10 ] && ICON1="%{F#ff7f00}\uf296%{F-}"
-				[ $BATTERY -ge 30 ] && ICON1="%{F#ffff00}\uf296%{F-}"
-				[ $BATTERY -ge 50 ] && ICON1="%{F#bfff00}\uf296%{F-}"
-				[ $BATTERY -ge 70 ] && ICON1="%{F#00ff00}\uf296%{F-}"
-				[ $BAT_STATE = "Charging" ] && ICON1="\uf294"
+				ICON1="\uf295"
+				[ ! $BATTERY -lt 10 ] && ICON1="\uf296" 
+				[ $BAT_STATE == "Charging" ] && ICON1="\uf294"	
+				COLOR="#ff0000"
+				[ ! $BATTERY -lt 10 ] && COLOR="#ff7f00"
+				[ ! $BATTERY -lt 30 ] && COLOR="#ffff00"
+				[ ! $BATTERY -lt 50 ] && COLOR="#bfff00"
+				[ ! $BATTERY -lt 60 ] && COLOR="#00ff00"
+				ICON1="%{F$COLOR}$ICON1%{F-}"
 				;;
 			S)
 				VOLUME="$2"
@@ -76,6 +62,7 @@ make_panel() {
 				;;
 			L)
 				BACKLIGHT="$2"
+				ICON3="\uf4b7"
 				;;
 
 			M)
