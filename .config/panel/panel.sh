@@ -14,7 +14,7 @@ battery() {
 	while true; do
 		level="$(cat /sys/class/power_supply/BAT1/capacity)"
 		state="$(cat /sys/class/power_supply/BAT1/status)"
-		[ $level -lt 3 -a $state = "Discharging" ] && systemctl hibernate
+		[ $level -lt 4 -a $state = "Discharging" ] && systemctl hibernate
 		echo "B:$level:$state"
 		sleep 60
 	done
